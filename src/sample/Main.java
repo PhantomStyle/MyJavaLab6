@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -14,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -51,6 +53,9 @@ public class Main extends Application {
 
     @FXML
     private Pane pane;
+
+    @FXML
+    private Text textSec;
 
 
     Stage stage;
@@ -99,42 +104,78 @@ public class Main extends Application {
         //смс тип введи значения
 
 
-        new Thread(() -> {
             readTimeBar();
 
-            for (final int[] i = {seconds}; i[0] != 0; i[0]--) {
-                Platform.runLater(() -> {
+//            for (int i = seconds; i != 0; i--) {
+//
+//                int finalI = i;
+//                Platform.runLater(() -> {
+//                    timeBarSecond.setText(String.valueOf(finalI));
+//                    try {
+//                        Thread.sleep(100);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    textSec.setText(String.valueOf(finalI));
+//                });
+//
+//
+//                    if (i == 0 && minuties != 0 && minuties >= 0) {
+//                        i = 60;
+//                        minuties--;
+//                        timeBarSecond.setText(String.valueOf(60));
+//                        timeBarMunute.setText(String.valueOf(minuties));
+//                    }
+//
+//                    if (i == 0 && minuties == 0 && hours >= 0) {
+//                        i = 60;
+//                        minuties = 60;
+//                        hours--;
+//                        timeBarSecond.setText(String.valueOf(60));
+//                        timeBarMunute.setText(String.valueOf(60));
+//                        timeBarHour.setText(String.valueOf(hours));
+//                    }
+//
+//                    if (i == 0 && minuties == 0 && hours == 0) {
+//                        ////окошко с концом
+//                    }
+//                    labelSec.setText(String.valueOf(i));
+//                    try {
+//                        Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//            }
 
-                    timeBarSecond.setText(String.valueOf(i[0]));
 
-                    if (i[0] == 0 && minuties != 0 && minuties >= 0) {
-                        i[0] = 60;
-                        minuties--;
-                        timeBarSecond.setText(String.valueOf(60));
-                        timeBarMunute.setText(String.valueOf(minuties));
-                    }
 
-                    if (i[0] == 0 && minuties == 0 && hours >= 0) {
-                        i[0] = 60;
-                        minuties = 60;
-                        hours--;
-                        timeBarSecond.setText(String.valueOf(60));
-                        timeBarMunute.setText(String.valueOf(60));
-                        timeBarHour.setText(String.valueOf(hours));
-                    }
+        Timeline time = new Timeline();
 
-                    if (i[0] == 0 && minuties == 0 && hours == 0) {
-                        ////окошко с концом
-                    }
-                    labelSec.setText(String.valueOf(i[0]));
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                });
+
+        KeyFrame frame = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+
+
+                seconds--;
+                timeBarSecond.setText(String.valueOf(seconds));
+                if (seconds <= 0) {
+                    time.stop();
+                }
+
+
             }
+
+
         });
+
+        time.setCycleCount(Timeline.INDEFINITE);
+        time.getKeyFrames().add(frame);
+        if (time != null) {
+            time.stop();
+        }
+        time.play();
     }
 
 }
