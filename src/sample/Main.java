@@ -219,8 +219,10 @@ public class Main extends Application {
     private void onPause(){
         if(forPause % 2 == 0){
             time.pause();
+            pause.setText("Resume");
         } else {
             time.play();
+            pause.setText("Pause");
         }
         forPause++;
 
