@@ -13,13 +13,9 @@
    <children>
       <TextField fx:id="timeBarHour" layoutX="75.0" layoutY="138.0" prefHeight="25.0" prefWidth="58.0" />
       <Button fx:id="start" layoutX="92.0" layoutY="287.0" mnemonicParsing="false" onAction="#onStart1" text="Start" />
-      <Button fx:id="pause" layoutX="275.0" layoutY="287.0" mnemonicParsing="false" text="Pause" />
-      <Button fx:id="reset" layoutX="478.0" layoutY="287.0" mnemonicParsing="false" text="Reset" />
+      <Button fx:id="pause" layoutX="275.0" layoutY="287.0" mnemonicParsing="false" onAction="#onPause" text="Pause" />
+      <Button fx:id="reset" layoutX="478.0" layoutY="287.0" mnemonicParsing="false" onAction="#onReset" text="Reset" />
       <TextField fx:id="timeBarMunute" layoutX="208.0" layoutY="138.0" prefHeight="25.0" prefWidth="58.0" />
-      <Label fx:id="labelHour" layoutX="75.0" layoutY="176.0" prefHeight="25.0" prefWidth="58.0" text="Label" />
-      <Label fx:id="labelMin" layoutX="208.0" layoutY="188.0" prefHeight="25.0" prefWidth="58.0" text="Label" />
-      <Label fx:id="labelSec" layoutX="336.0" layoutY="188.0" prefHeight="25.0" prefWidth="58.0" text="Label" />
       <TextField fx:id="timeBarSecond" layoutX="336.0" layoutY="138.0" prefHeight="25.0" prefWidth="58.0" />
-      <Text fx:id="textSec" layoutX="441.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
    </children>
 </AnchorPane>

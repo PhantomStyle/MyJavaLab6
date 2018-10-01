@@ -15,7 +15,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -56,6 +58,10 @@ public class Main extends Application {
 
     @FXML
     private Text textSec;
+
+    Timeline time;
+
+    private static int forPause = 0;
 
 
     Stage stage;
@@ -104,7 +110,7 @@ public class Main extends Application {
         //смс тип введи значения
 
 
-            readTimeBar();
+        readTimeBar();
 
 //            for (int i = seconds; i != 0; i--) {
 //
@@ -148,8 +154,7 @@ public class Main extends Application {
 //            }
 
 
-
-        Timeline time = new Timeline();
+        time = new Timeline();
 
 
         KeyFrame frame = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
@@ -158,12 +163,35 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
 
 
-                seconds--;
-                timeBarSecond.setText(String.valueOf(seconds));
-                if (seconds <= 0) {
+
+                if(seconds == 0 && minuties == 0 && hours == 0){
+                    Stage st = new Stage();
+                    st.initModality(Modality.APPLICATION_MODAL);
+                    st.initOwner(stage);
+                    VBox dialogVbox = new VBox(20);
+                    dialogVbox.getChildren().add(new Text("Time is over"));
+                    Scene dialogScene = new Scene(dialogVbox, 300, 200);
+                    st.setScene(dialogScene);
+                    st.show();
                     time.stop();
                 }
+                if(seconds == 0 && minuties != 0){
+                    --minuties;
+                    seconds = 59;
+                }
+                if(minuties == 0 && seconds == 0 && hours != 0){
+                    --hours;
+                    minuties = 59;
+                }
 
+
+                timeBarSecond.setText(String.valueOf(seconds));
+                timeBarMunute.setText(String.valueOf(minuties));
+                timeBarHour.setText(String.valueOf(hours));
+//                if (seconds <= 0) {
+//                    time.stop();
+//                }
+                --seconds;
 
             }
 
@@ -176,6 +204,26 @@ public class Main extends Application {
             time.stop();
         }
         time.play();
+    }
+
+
+    @FXML
+    private void onReset(){
+        time.stop();
+        timeBarSecond.setText(String.valueOf(0));
+        timeBarMunute.setText(String.valueOf(0));
+        timeBarHour.setText(String.valueOf(0));
+    }
+
+    @FXML
+    private void onPause(){
+        if(forPause % 2 == 0){
+            time.pause();
+        } else {
+            time.play();
+        }
+        forPause++;
+
     }
 
 }
